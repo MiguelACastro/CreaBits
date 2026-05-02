@@ -17,6 +17,41 @@ export const toolbox = {
   contents: [
     {
       kind: 'category',
+      name: 'CreaBits',
+      categorystyle: 'logic_category',
+      contents: [
+        {
+          kind: 'block',
+          type: 'avanza'
+        },
+        {
+          kind: 'block',
+          type: 'gira'
+        },
+        {
+          kind: 'block',
+          type: 'salta'
+        },
+        {
+          kind: 'block',
+          type: 'grosor'
+        },
+        {
+          kind: 'block',
+          type: 'pinta'
+        },
+        {
+          kind: 'block',
+          type: 'colour_picker'
+        },
+        {
+          kind: 'block',
+          type: 'limpiar'
+        }
+      ]
+    },
+    {
+      kind: 'category',
       name: 'Logic',
       categorystyle: 'logic_category',
       contents: [
@@ -316,297 +351,6 @@ export const toolbox = {
               },
             },
           },
-        },
-      ],
-    },
-    {
-      kind: 'category',
-      name: 'Text',
-      categorystyle: 'text_category',
-      contents: [
-        {
-          kind: 'block',
-          type: 'text',
-        },
-        {
-          kind: 'block',
-          type: 'text_join',
-        },
-        {
-          kind: 'block',
-          type: 'text_append',
-          inputs: {
-            TEXT: {
-              shadow: {
-                type: 'text',
-                fields: {
-                  TEXT: '',
-                },
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'text_length',
-          inputs: {
-            VALUE: {
-              shadow: {
-                type: 'text',
-                fields: {
-                  TEXT: 'abc',
-                },
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'text_isEmpty',
-          inputs: {
-            VALUE: {
-              shadow: {
-                type: 'text',
-                fields: {
-                  TEXT: '',
-                },
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'text_indexOf',
-          inputs: {
-            VALUE: {
-              block: {
-                type: 'variables_get',
-              },
-            },
-            FIND: {
-              shadow: {
-                type: 'text',
-                fields: {
-                  TEXT: 'abc',
-                },
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'text_charAt',
-          inputs: {
-            VALUE: {
-              block: {
-                type: 'variables_get',
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'text_getSubstring',
-          inputs: {
-            STRING: {
-              block: {
-                type: 'variables_get',
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'text_changeCase',
-          inputs: {
-            TEXT: {
-              shadow: {
-                type: 'text',
-                fields: {
-                  TEXT: 'abc',
-                },
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'text_trim',
-          inputs: {
-            TEXT: {
-              shadow: {
-                type: 'text',
-                fields: {
-                  TEXT: 'abc',
-                },
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'text_count',
-          inputs: {
-            SUB: {
-              shadow: {
-                type: 'text',
-              },
-            },
-            TEXT: {
-              shadow: {
-                type: 'text',
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'text_replace',
-          inputs: {
-            FROM: {
-              shadow: {
-                type: 'text',
-              },
-            },
-            TO: {
-              shadow: {
-                type: 'text',
-              },
-            },
-            TEXT: {
-              shadow: {
-                type: 'text',
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'text_reverse',
-          inputs: {
-            TEXT: {
-              shadow: {
-                type: 'text',
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'add_text',
-          inputs: {
-            TEXT: {
-              shadow: {
-                type: 'text',
-                fields: {
-                  TEXT: 'abc',
-                },
-              },
-            },
-          },
-        },
-      ],
-    },
-    {
-      kind: 'category',
-      name: 'Lists',
-      categorystyle: 'list_category',
-      contents: [
-        {
-          kind: 'block',
-          type: 'lists_create_with',
-        },
-        {
-          kind: 'block',
-          type: 'lists_create_with',
-        },
-        {
-          kind: 'block',
-          type: 'lists_repeat',
-          inputs: {
-            NUM: {
-              shadow: {
-                type: 'math_number',
-                fields: {
-                  NUM: 5,
-                },
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'lists_length',
-        },
-        {
-          kind: 'block',
-          type: 'lists_isEmpty',
-        },
-        {
-          kind: 'block',
-          type: 'lists_indexOf',
-          inputs: {
-            VALUE: {
-              block: {
-                type: 'variables_get',
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'lists_getIndex',
-          inputs: {
-            VALUE: {
-              block: {
-                type: 'variables_get',
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'lists_setIndex',
-          inputs: {
-            LIST: {
-              block: {
-                type: 'variables_get',
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'lists_getSublist',
-          inputs: {
-            LIST: {
-              block: {
-                type: 'variables_get',
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'lists_split',
-          inputs: {
-            DELIM: {
-              shadow: {
-                type: 'text',
-                fields: {
-                  TEXT: ',',
-                },
-              },
-            },
-          },
-        },
-        {
-          kind: 'block',
-          type: 'lists_sort',
-        },
-        {
-          kind: 'block',
-          type: 'lists_reverse',
         },
       ],
     },
