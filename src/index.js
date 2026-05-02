@@ -37,6 +37,8 @@ const ctx = canvas.getContext("2d");
 
 ctx.reset();
 ctx.translate(canvas.width / 2, canvas.height / 2);
+ctx.lineWidth = 2;
+ctx.strokeStyle = "#000000";
 
 const cursor = {
     x: 0,
@@ -74,6 +76,8 @@ function pinta(color) {
 function limpiar() {
     ctx.reset();
     ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#000000";
     cursor.x = 0;
     cursor.y = 0;
     cursor.angulo = 0;
