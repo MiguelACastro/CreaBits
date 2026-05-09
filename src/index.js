@@ -82,6 +82,12 @@ function limpiar() {
     cursor.angulo = 0;
 }
 
+function circulo(radio) {
+    ctx.beginPath();
+    ctx.arc(cursor.x, cursor.y, radio, 0, 2 * Math.PI);
+    ctx.stroke();
+}
+
 function repite(n, ...bloque) {
     for (let i = 0; i < n; i++) {
         bloque.forEach(funcion => {

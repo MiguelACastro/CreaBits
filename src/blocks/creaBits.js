@@ -90,6 +90,22 @@ const LIMPIA = {
     tooltip: 'Limpia el canvas',
 }
 
+const CIRCULO = {
+    type: 'circulo',
+    message0: 'CIRCULO %1',
+    args0: [
+        {
+            type: 'input_value',
+            name: 'RADIO',
+            check: 'Number'
+        }
+    ],
+    previousStatement: null,
+    nextStatement: null,
+    colour: '#7790d9',
+    tooltip: 'Dibuja un circulo con el radio especificado'
+}
+
 export const blocks = Blockly.common.defineBlocksWithJsonArray([
     AVANZA,
     GIRA,
@@ -97,4 +113,5 @@ export const blocks = Blockly.common.defineBlocksWithJsonArray([
     GROSOR,
     PINTA,
     LIMPIA,
+    CIRCULO,
 ])

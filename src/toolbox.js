@@ -93,6 +93,20 @@ export const toolbox = {
         },
         {
           kind: 'block',
+          type: 'circulo',
+          inputs: {
+            RADIO: {
+              shadow: {
+                type: 'math_number',
+                fields: {
+                  NUM: 50,
+                },
+              },
+            },
+          },
+        },
+        {
+          kind: 'block',
           type: 'limpiar'
         }
       ]

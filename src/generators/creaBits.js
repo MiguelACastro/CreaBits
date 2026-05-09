@@ -36,3 +36,9 @@ forBlock['limpiar'] = function(block, generator) {
     const code = `limpiar();\n`;
     return code;
 }
+
+forBlock['circulo'] = function(block, generator) {
+    const radio = generator.valueToCode(block, 'RADIO', Order.ATOMIC);
+    const code = `circulo(${radio});\n`;
+    return code;
+}
