@@ -2,15 +2,21 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Blockly Sample App</title>
+    <title>CreaBits - Compilador visual</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Andika:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   </head>
   <body>
+    <header id="topBar">
+      <h1>✨ CreaBits ✨</h1>
+      <p>¡Dibuja y aprende!</p>
+    </header>
     <div id="pageContainer">
-      <div id="outputPane">
-        <pre id="generatedCode"><code></code></pre>
-        <canvas id="canvas" width="400" height="400"></canvas>
-      </div>
       <div id="blocklyDiv"></div>
+      <div id="outputPane">
+        <canvas id="canvas" width="500" height="500"></canvas>
+      </div>
     </div>
   </body>
 </html>

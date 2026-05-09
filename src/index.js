@@ -22,7 +22,6 @@ Object.assign(javascriptGenerator.forBlock, forBlock);
 Blockly.setLocale(Es);
 
 // Set up UI elements and inject Blockly
-const codeDiv = document.getElementById('generatedCode').firstChild;
 const blocklyDiv = document.getElementById('blocklyDiv');
 const ws = Blockly.inject(blocklyDiv, {toolbox});
 
@@ -100,8 +99,8 @@ function si(condicion, ...bloque) {
 }
 `
   let code = javascriptGenerator.workspaceToCode(ws);
+  console.log(code)
   code = preamble + code;
-  codeDiv.innerText = code;
 
   eval(code);
 };
