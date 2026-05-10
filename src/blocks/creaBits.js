@@ -106,6 +106,62 @@ const CIRCULO = {
     tooltip: 'Dibuja un circulo con el radio especificado'
 }
 
+const POS_X = {
+    type: 'pos_x',
+    message0: 'X',
+    output: 'Number',
+    colour: '#d4a017',
+    tooltip: 'Posición X del cursor',
+}
+
+const POS_Y = {
+    type: 'pos_y',
+    message0: 'Y',
+    output: 'Number',
+    colour: '#d4a017',
+    tooltip: 'Posición Y del cursor',
+}
+
+const ANGULO = {
+    type: 'angulo',
+    message0: 'ÁNGULO',
+    output: 'Number',
+    colour: '#d4a017',
+    tooltip: 'Ángulo actual del cursor en grados',
+}
+
+const LIMITE_IZQ = {
+    type: 'limite_izq',
+    message0: 'LÍMITE IZQUIERDA',
+    output: 'Number',
+    colour: '#d4a017',
+    tooltip: 'Límite izquierdo del canvas',
+}
+
+const LIMITE_DER = {
+    type: 'limite_der',
+    message0: 'LÍMITE DERECHA',
+    output: 'Number',
+    colour: '#d4a017',
+    tooltip: 'Límite derecho del canvas',
+}
+
+const LIMITE_SUP = {
+    type: 'limite_sup',
+    message0: 'LÍMITE SUPERIOR',
+    output: 'Number',
+    colour: '#d4a017',
+    tooltip: 'Límite superior del canvas',
+}
+
+const LIMITE_INF = {
+    type: 'limite_inf',
+    message0: 'LÍMITE INFERIOR',
+    output: 'Number',
+    colour: '#d4a017',
+    tooltip: 'Límite inferior del canvas',
+}
+
 export const blocks = Blockly.common.defineBlocksWithJsonArray([
     AVANZA,
     GIRA,
@@ -114,4 +170,11 @@ export const blocks = Blockly.common.defineBlocksWithJsonArray([
     PINTA,
     LIMPIA,
     CIRCULO,
+    POS_X,
+    POS_Y,
+    ANGULO,
+    LIMITE_IZQ,
+    LIMITE_DER,
+    LIMITE_SUP,
+    LIMITE_INF
 ])

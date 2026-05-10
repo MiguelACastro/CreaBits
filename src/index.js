@@ -20,7 +20,7 @@ installColourBlocks({
 Object.assign(javascriptGenerator.forBlock, forBlock);
 
 Blockly.setLocale(Es);
-
+Blockly.ContextMenuItems.registerCommentOptions();
 // Set up UI elements and inject Blockly
 const blocklyDiv = document.getElementById('blocklyDiv');
 const ws = Blockly.inject(blocklyDiv, {toolbox});

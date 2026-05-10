@@ -274,6 +274,41 @@ export const toolbox = {
     },
     {
       kind: 'category',
+      name: 'Estado',
+      categorystyle: 'math_category',
+      contents: [
+        {
+          kind: 'block',
+          type: 'pos_x'
+        },
+        {
+          kind: 'block',
+          type: 'pos_y'
+        },
+        {
+          kind: 'block',
+          type: 'angulo'
+        },
+        {
+          kind: 'block',
+          type: 'limite_izq'
+        },
+        {
+          kind: 'block',
+          type: 'limite_der'
+        },
+        {
+          kind: 'block',
+          type: 'limite_sup'
+        },
+        {
+          kind: 'block',
+          type: 'limite_inf'
+        }
+      ]
+    },
+    {
+      kind: 'category',
       name: 'Variables',
       categorystyle: 'variable_category',
       custom: 'VARIABLE',
