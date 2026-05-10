@@ -1,3 +1,31 @@
+/*! ../original-repo/acorn */
+
+/*! ../original-repo/interpreter */
+
+/*! vm */
+
+/*!*********************!*\
+  !*** external "vm" ***!
+  \*********************/
+
+/*!*******************************!*\
+  !*** ./src/js-interpreter.js ***!
+  \*******************************/
+
+/*!********************************!*\
+  !*** ./original-repo/acorn.js ***!
+  \********************************/
+
+/*!**************************************!*\
+  !*** ./original-repo/interpreter.js ***!
+  \**************************************/
+
+/**
+ * @license
+ * Copyright 2013 Neil Fraser
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * @license
  * Copyright 2019 Google LLC
