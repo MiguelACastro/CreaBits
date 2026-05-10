@@ -15,7 +15,12 @@
     <div id="pageContainer">
       <div id="blocklyDiv"></div>
       <div id="outputPane">
-        <canvas id="canvas" width="500" height="500"></canvas>
+        <div id="controls">
+          <button id="runButton">Ejecutar</button>
+          <label for="speedSlider">Velocidad:</label>
+          <input type="range" id="speedSlider" min="0" max="1000" value="1000">
+        </div>
+        <canvas id="canvas" width="400" height="400"></canvas>
       </div>
     </div>
   </body>

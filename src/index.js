@@ -101,43 +101,71 @@ function initApi(interpreter, globalObject) {
     const pseudoConsole = interpreter.createObjectProto(interpreter.OBJECT_PROTO);
     interpreter.setProperty(globalObject, 'console', pseudoConsole);
     interpreter.setProperty(pseudoConsole, 'log', interpreter.createNativeFunction((...args) => console.log(...args)));
+
+    // Highlight block function for JS Interpreter
+    const wrapperHighlight = function(id) {
+        id = String(id || '');
+        highlightBlock(id);
+        interpreter.pause_ = true;
+    };
+    interpreter.setProperty(globalObject, 'highlightBlock',
+        interpreter.createNativeFunction(wrapperHighlight));
+}
+
+let myInterpreter = null;
+let runner = null;
+
+function highlightBlock(id) {
+  ws.highlightBlock(id);
 }
 
 const runCode = () => {
+  clearTimeout(runner);
   initCanvas();
+  ws.highlightBlock(null);
+  
+  javascriptGenerator.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+  javascriptGenerator.addReservedWords('highlightBlock');
+  
   let code = javascriptGenerator.workspaceToCode(ws);
   console.log(code);
-  const myInterpreter = new Interpreter(code, initApi);
-  try {
-    myInterpreter.run();
-  } catch (error) {
-    console.error(error);
-  }
+  
+  myInterpreter = new Interpreter(code, initApi);
+  stepCode();
 };
 
-// Load the initial state from storage and run the code.
+function stepCode() {
+  if (!myInterpreter) return;
+
+  const speedSlider = document.getElementById('speedSlider');
+  const delay = 1000 - (speedSlider ? parseInt(speedSlider.value, 10) : 500);
+  
+  let hasMore = true;
+  myInterpreter.pause_ = false;
+
+  try {
+    while (hasMore && !myInterpreter.pause_) {
+      hasMore = myInterpreter.step();
+    }
+  } catch (error) {
+    console.error(error);
+    hasMore = false;
+  }
+
+  if (hasMore) {
+    runner = setTimeout(stepCode, delay);
+  } else {
+    ws.highlightBlock(null);
+  }
+}
+
+document.getElementById('runButton').addEventListener('click', runCode);
+
+// Load the initial state from storage
 load(ws);
-runCode();
 
 // Every time the workspace changes state, save the changes to storage.
 ws.addChangeListener((e) => {
-  // UI events are things like scrolling, zooming, etc.
-  // No need to save after one of these.
   if (e.isUiEvent) return;
   save(ws);
-});
-
-// Whenever the workspace changes meaningfully, run the code again.
-ws.addChangeListener((e) => {
-  // Don't run the code when the workspace finishes loading; we're
-  // already running it once when the application starts.
-  // Don't run the code during drags; we might have invalid state.
-  if (
-    e.isUiEvent ||
-    e.type == Blockly.Events.FINISHED_LOADING ||
-    ws.isDragging()
-  ) {
-    return;
-  }
-  runCode();
 });

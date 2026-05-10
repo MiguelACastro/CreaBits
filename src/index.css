@@ -71,11 +71,40 @@ body {
 }
 
 #canvas {
-  width: 500px;
-  height: 500px;
+  width: 400px;
+  height: 400px;
   background-color: white;
   border-radius: 20px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
   border: 4px solid var(--primary);
   flex-shrink: 0;
+}
+
+#controls {
+  margin-bottom: 10px; 
+  display: flex; 
+  align-items: center; 
+  gap: 15px;
+}
+
+#runButton {
+  padding: 10px; 
+  font-weight: bold; 
+  background: #4a7729; 
+  color: white; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer;
+}
+
+#controls > label {
+  font-weight: bold;
+}
+
+#speedSlider {
+  flex-grow: 1;
+}
+
+#runButton:hover {
+  background-color: #3c5a1e;
 }
