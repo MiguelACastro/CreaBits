@@ -31,6 +31,11 @@ const config = {
       template: 'src/index.html',
     }),
   ],
+  resolve: {
+    fallback: {
+      "vm": require.resolve('vm-browserify'),
+    },
+  },
 };
 
 module.exports = (env, argv) => {

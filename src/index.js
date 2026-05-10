@@ -13,6 +13,7 @@ import {toolbox} from './toolbox';
 import './index.css';
 import * as Es from 'blockly/msg/es';
 import {installAllBlocks as installColourBlocks} from '@blockly/field-colour';
+import Interpreter from 'js-interpreter';
 
 installColourBlocks({
   javascript: javascriptGenerator
@@ -25,24 +26,23 @@ Blockly.ContextMenuItems.registerCommentOptions();
 const blocklyDiv = document.getElementById('blocklyDiv');
 const ws = Blockly.inject(blocklyDiv, {toolbox});
 
-// This function resets the code and output divs, shows the
-// generated code from the workspace, and evals the code.
-// In a real application, you probably shouldn't use `eval`.
-const runCode = () => {
-  const preamble = `
 const canvas = document.getElementById("canvas");
-
 const ctx = canvas.getContext("2d");
-
-ctx.reset();
-ctx.translate(canvas.width / 2, canvas.height / 2);
-ctx.lineWidth = 2;
-ctx.strokeStyle = "#000000";
 
 const cursor = {
     x: 0,
     y: 0,
     angulo: 0,
+}
+
+function initCanvas() {
+    ctx.reset();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#000000";
+    cursor.x = 0;
+    cursor.y = 0;
+    cursor.angulo = 0;
 }
 
 function avanza(distancia) {
@@ -73,13 +73,7 @@ function pinta(color) {
 }
 
 function limpiar() {
-    ctx.reset();
-    ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "#000000";
-    cursor.x = 0;
-    cursor.y = 0;
-    cursor.angulo = 0;
+    initCanvas();
 }
 
 function circulo(radio) {
@@ -88,27 +82,37 @@ function circulo(radio) {
     ctx.stroke();
 }
 
-function repite(n, ...bloque) {
-    for (let i = 0; i < n; i++) {
-        bloque.forEach(funcion => {
-            funcion();
-        });
-    }
+function initApi(interpreter, globalObject) {
+    interpreter.setProperty(globalObject, 'CANVAS_WIDTH', canvas.width);
+    interpreter.setProperty(globalObject, 'CANVAS_HEIGHT', canvas.height);
+
+    interpreter.setProperty(globalObject, 'getCursorX', interpreter.createNativeFunction(() => cursor.x));
+    interpreter.setProperty(globalObject, 'getCursorY', interpreter.createNativeFunction(() => cursor.y));
+    interpreter.setProperty(globalObject, 'getCursorAngulo', interpreter.createNativeFunction(() => Math.round(cursor.angulo * 180 / Math.PI)));
+
+    interpreter.setProperty(globalObject, 'avanza', interpreter.createNativeFunction((d) => avanza(Number(d))));
+    interpreter.setProperty(globalObject, 'gira', interpreter.createNativeFunction((a) => gira(Number(a))));
+    interpreter.setProperty(globalObject, 'salta', interpreter.createNativeFunction((d) => salta(Number(d))));
+    interpreter.setProperty(globalObject, 'grosor', interpreter.createNativeFunction((g) => grosor(Number(g))));
+    interpreter.setProperty(globalObject, 'pinta', interpreter.createNativeFunction((c) => pinta(String(c))));
+    interpreter.setProperty(globalObject, 'limpiar', interpreter.createNativeFunction(limpiar));
+    interpreter.setProperty(globalObject, 'circulo', interpreter.createNativeFunction((r) => circulo(Number(r))));
+    
+    const pseudoConsole = interpreter.createObjectProto(interpreter.OBJECT_PROTO);
+    interpreter.setProperty(globalObject, 'console', pseudoConsole);
+    interpreter.setProperty(pseudoConsole, 'log', interpreter.createNativeFunction((...args) => console.log(...args)));
 }
 
-function si(condicion, ...bloque) {
-    if (condicion) {
-        bloque.forEach(funcion => {
-            funcion();
-        });
-    }
-}
-`
+const runCode = () => {
+  initCanvas();
   let code = javascriptGenerator.workspaceToCode(ws);
-  console.log(code)
-  code = preamble + code;
-
-  eval(code);
+  console.log(code);
+  const myInterpreter = new Interpreter(code, initApi);
+  try {
+    myInterpreter.run();
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // Load the initial state from storage and run the code.
