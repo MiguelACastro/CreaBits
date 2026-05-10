@@ -43,6 +43,13 @@ forBlock['circulo'] = function(block, generator) {
     return code;
 }
 
+forBlock['ir_a'] = function(block, generator) {
+    const x = generator.valueToCode(block, 'X', Order.ATOMIC) || '0';
+    const y = generator.valueToCode(block, 'Y', Order.ATOMIC) || '0';
+    const code = `ir_a(${x}, ${y});\n`;
+    return code;
+}
+
 forBlock['pos_x'] = function(block, generator) {
     return ['getCursorX()', Order.FUNCTION_CALL];
 }

@@ -61,6 +61,28 @@ export const toolbox = {
         },
         {
           kind: 'block',
+          type: 'ir_a',
+          inputs: {
+            X: {
+              shadow: {
+                type: 'math_number',
+                fields: {
+                  NUM: 0,
+                },
+              },
+            },
+            Y: {
+              shadow: {
+                type: 'math_number',
+                fields: {
+                  NUM: 0,
+                },
+              },
+            },
+          },
+        },
+        {
+          kind: 'block',
           type: 'grosor',
           inputs: {
             GROSOR: {
@@ -90,6 +112,10 @@ export const toolbox = {
         {
           kind: 'block',
           type: 'colour_picker'
+        },
+        {
+          kind: 'block',
+          type: 'colour_random'
         },
         {
           kind: 'block',

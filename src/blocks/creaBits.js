@@ -106,6 +106,28 @@ const CIRCULO = {
     tooltip: 'Dibuja un circulo con el radio especificado'
 }
 
+const IR_A = {
+    type: 'ir_a',
+    message0: 'IR A X: %1 Y: %2',
+    args0: [
+        {
+            type: 'input_value',
+            name: 'X',
+            check: 'Number'
+        },
+        {
+            type: 'input_value',
+            name: 'Y',
+            check: 'Number'
+        }
+    ],
+    previousStatement: null,
+    nextStatement: null,
+    colour: '#7aa3a3',
+    tooltip: 'Mueve a la coordenada X e Y',
+}
+
+
 const POS_X = {
     type: 'pos_x',
     message0: 'X',
@@ -170,6 +192,7 @@ export const blocks = Blockly.common.defineBlocksWithJsonArray([
     PINTA,
     LIMPIA,
     CIRCULO,
+    IR_A,
     POS_X,
     POS_Y,
     ANGULO,

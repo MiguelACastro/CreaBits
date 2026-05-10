@@ -64,6 +64,12 @@ function salta(distancia) {
     ctx.moveTo(cursor.x, cursor.y);
 }
 
+function ir_a(x, y) {
+    cursor.x = x;
+    cursor.y = y;
+    ctx.moveTo(cursor.x, cursor.y);
+}
+
 function grosor(grosor) {
     ctx.lineWidth = grosor;
 }
@@ -97,6 +103,7 @@ function initApi(interpreter, globalObject) {
     interpreter.setProperty(globalObject, 'pinta', interpreter.createNativeFunction((c) => pinta(String(c))));
     interpreter.setProperty(globalObject, 'limpiar', interpreter.createNativeFunction(limpiar));
     interpreter.setProperty(globalObject, 'circulo', interpreter.createNativeFunction((r) => circulo(Number(r))));
+    interpreter.setProperty(globalObject, 'ir_a', interpreter.createNativeFunction((x, y) => ir_a(Number(x), Number(y))));
     
     const pseudoConsole = interpreter.createObjectProto(interpreter.OBJECT_PROTO);
     interpreter.setProperty(globalObject, 'console', pseudoConsole);
