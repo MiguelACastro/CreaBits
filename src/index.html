@@ -10,7 +10,22 @@
   <body>
     <header id="topBar">
       <h1>✨ CreaBits ✨</h1>
-      <p>¡Dibuja y aprende!</p>
+      <div class="topBar-right">
+        <p>¡Dibuja y aprende!</p>
+        <div class="dropdown">
+          <button class="dropbtn">⚙️ Configuración</button>
+          <div class="dropdown-content">
+            <label>
+              <input type="checkbox" id="autoRunCheckbox">
+              Ejecución instantánea
+            </label>
+            <label>
+              Fondo del canvas:
+              <input type="color" id="canvasColorPicker" value="#ffffff">
+            </label>
+          </div>
+        </div>
+      </div>
     </header>
     <div id="pageContainer">
       <div id="blocklyDiv"></div>

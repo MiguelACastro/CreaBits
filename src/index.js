@@ -126,19 +126,32 @@ function highlightBlock(id) {
   ws.highlightBlock(id);
 }
 
-const runCode = () => {
+const runCode = (isInstant = false) => {
   clearTimeout(runner);
   initCanvas();
   ws.highlightBlock(null);
   
-  javascriptGenerator.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
-  javascriptGenerator.addReservedWords('highlightBlock');
+  if (isInstant) {
+    javascriptGenerator.STATEMENT_PREFIX = '';
+  } else {
+    javascriptGenerator.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+    javascriptGenerator.addReservedWords('highlightBlock');
+  }
   
   let code = javascriptGenerator.workspaceToCode(ws);
   console.log(code);
   
   myInterpreter = new Interpreter(code, initApi);
-  stepCode();
+  
+  if (isInstant) {
+    try {
+      myInterpreter.run();
+    } catch (error) {
+      console.error(error);
+    }
+  } else {
+    stepCode();
+  }
 };
 
 function stepCode() {
@@ -166,13 +179,64 @@ function stepCode() {
   }
 }
 
-document.getElementById('runButton').addEventListener('click', runCode);
+document.getElementById('runButton').addEventListener('click', () => runCode(false));
+
+//Menú de configuración
+const dropBtn = document.querySelector('.dropbtn');
+const dropdownContent = document.querySelector('.dropdown-content');
+
+dropBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  dropdownContent.classList.toggle('show');
+});
+
+window.addEventListener('click', () => {
+  dropdownContent.classList.remove('show');
+});
+
+dropdownContent.addEventListener('click', (e) => {
+  e.stopPropagation();
+});
+
+const autoRunCheckbox = document.getElementById('autoRunCheckbox');
+const canvasColorPicker = document.getElementById('canvasColorPicker');
+
+const savedColor = localStorage.getItem('canvasColor');
+if (savedColor) {
+  canvas.style.backgroundColor = savedColor;
+  canvasColorPicker.value = savedColor;
+}
+
+const savedAutoRun = localStorage.getItem('autoRun');
+if (savedAutoRun !== null) {
+  autoRunCheckbox.checked = savedAutoRun === 'true';
+}
+
+canvasColorPicker.addEventListener('input', (e) => {
+  const color = e.target.value;
+  canvas.style.backgroundColor = color;
+  localStorage.setItem('canvasColor', color);
+});
+
+autoRunCheckbox.addEventListener('change', (e) => {
+  localStorage.setItem('autoRun', e.target.checked);
+  if (e.target.checked) {
+    runCode(true);
+  }
+});
+
+
 
 // Load the initial state from storage
 load(ws);
 
 // Every time the workspace changes state, save the changes to storage.
 ws.addChangeListener((e) => {
-  if (e.isUiEvent) return;
+  if (e.isUiEvent || e.type === Blockly.Events.FINISHED_LOADING) return;
   save(ws);
+  
+  console.log(autoRunCheckbox.checked)
+  if (autoRunCheckbox.checked) {
+    runCode(true);
+  }
 });
