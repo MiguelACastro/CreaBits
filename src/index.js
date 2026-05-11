@@ -35,6 +35,12 @@ const cursor = {
     angulo: 0,
 }
 
+const cursorOverlay = document.getElementById('cursorOverlay');
+
+function updateCursorOverlay() {
+    cursorOverlay.style.transform = `translate(${cursor.x}px, ${cursor.y}px) rotate(${cursor.angulo}rad)`;
+}
+
 function initCanvas() {
     ctx.reset();
     ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -43,6 +49,7 @@ function initCanvas() {
     cursor.x = 0;
     cursor.y = 0;
     cursor.angulo = 0;
+    updateCursorOverlay();
 }
 
 function avanza(distancia) {
@@ -52,22 +59,26 @@ function avanza(distancia) {
     cursor.y += distancia * Math.sin(cursor.angulo);
     ctx.lineTo(cursor.x, cursor.y);
     ctx.stroke();
+    updateCursorOverlay();
 }
 
 function gira(angulo) {
     cursor.angulo += angulo * Math.PI / 180;
+    updateCursorOverlay();
 }
 
 function salta(distancia) {
     cursor.x += distancia * Math.cos(cursor.angulo);
     cursor.y += distancia * Math.sin(cursor.angulo);
     ctx.moveTo(cursor.x, cursor.y);
+    updateCursorOverlay();
 }
 
 function ir_a(x, y) {
     cursor.x = x;
     cursor.y = y;
     ctx.moveTo(cursor.x, cursor.y);
+    updateCursorOverlay();
 }
 
 function grosor(grosor) {
@@ -200,6 +211,18 @@ dropdownContent.addEventListener('click', (e) => {
 
 const autoRunCheckbox = document.getElementById('autoRunCheckbox');
 const canvasColorPicker = document.getElementById('canvasColorPicker');
+const showCursorCheckbox = document.getElementById('showCursorCheckbox');
+
+const savedShowCursor = localStorage.getItem('showCursor');
+if (savedShowCursor !== null) {
+  showCursorCheckbox.checked = savedShowCursor === 'true';
+  cursorOverlay.style.display = showCursorCheckbox.checked ? 'block' : 'none';
+}
+
+showCursorCheckbox.addEventListener('change', (e) => {
+  localStorage.setItem('showCursor', e.target.checked);
+  cursorOverlay.style.display = e.target.checked ? 'block' : 'none';
+});
 
 const savedColor = localStorage.getItem('canvasColor');
 if (savedColor) {

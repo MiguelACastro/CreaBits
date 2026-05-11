@@ -20,6 +20,10 @@
               Ejecución instantánea
             </label>
             <label>
+              <input type="checkbox" id="showCursorCheckbox" checked>
+              Mostrar cursor
+            </label>
+            <label>
               Fondo del canvas:
               <input type="color" id="canvasColorPicker" value="#ffffff">
             </label>
@@ -35,7 +39,14 @@
           <label for="speedSlider">Velocidad:</label>
           <input type="range" id="speedSlider" min="0" max="1000" value="1000">
         </div>
-        <canvas id="canvas" width="400" height="400"></canvas>
+        <div id="canvasWrapper">
+          <canvas id="canvas" width="400" height="400"></canvas>
+          <div id="cursorOverlay">
+            <svg width="24" height="24" viewBox="-12 -12 24 24">
+              <polygon points="8,0 -8,-8 -4,0 -8,8" fill="#e74c3c" stroke="#c0392b" stroke-width="2" stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
   </body>

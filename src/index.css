@@ -170,3 +170,35 @@ body {
   display: block;
 }
 
+#canvasWrapper {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+}
+
+#cursorOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  z-index: 2;
+  pointer-events: none;
+  transition: transform 0.1s linear;
+}
+
+#cursorOverlay svg {
+  position: absolute;
+  top: -12px;
+  left: -12px;
+}
+
+#canvasColorPicker {
+  cursor: pointer;
+}
+
+.dropdown-content label {
+  justify-content: space-between;
+}
+
+
