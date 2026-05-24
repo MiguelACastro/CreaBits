@@ -14,6 +14,7 @@ import './index.css';
 import * as Es from 'blockly/msg/es';
 import {installAllBlocks as installColourBlocks} from '@blockly/field-colour';
 import Interpreter from 'js-interpreter';
+import InfiniteCanvas from 'ef-infinite-canvas';
 
 installColourBlocks({
   javascript: javascriptGenerator
@@ -27,7 +28,8 @@ const blocklyDiv = document.getElementById('blocklyDiv');
 const ws = Blockly.inject(blocklyDiv, {toolbox});
 
 const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+const infCanvas = new InfiniteCanvas(canvas, { rotationEnabled: false });
+const ctx = infCanvas.getContext("2d");
 
 const cursor = {
     x: 0,
@@ -38,8 +40,56 @@ const cursor = {
 const cursorOverlay = document.getElementById('cursorOverlay');
 
 function updateCursorOverlay() {
-    cursorOverlay.style.transform = `translate(${cursor.x}px, ${cursor.y}px) rotate(${cursor.angulo}rad)`;
+    if (!infCanvas) {
+      return;
+    }
+    let a = 1, b = 0, c = 0, d = 1, e = 0, f = 0;
+    try {
+        const trans = infCanvas.inverseTransformation;
+        if (trans) {
+            a = trans.a;
+            b = trans.b;
+            c = trans.c;
+            d = trans.d;
+            e = trans.e;
+            f = trans.f;
+        }
+    } catch (err) {
+        console.error(err);
+    }
+    
+    const worldX = cursor.x + canvas.width / 2;
+    const worldY = cursor.y + canvas.height / 2;
+    const screenX = a * worldX + c * worldY + e;
+    const screenY = b * worldX + d * worldY + f;
+    
+    const vx = Math.cos(cursor.angulo);
+    const vy = Math.sin(cursor.angulo);
+    const transformedVx = a * vx + c * vy;
+    const transformedVy = b * vx + d * vy;
+    const screenAngle = Math.atan2(transformedVy, transformedVx);
+    
+    cursorOverlay.style.transform = `translate(${screenX}px, ${screenY}px) rotate(${screenAngle}rad)`;
+    
+    const isInsideView = screenX >= 0 && screenX <= canvas.width && screenY >= 0 && screenY <= canvas.height;
+    cursorOverlay.style.visibility = isInsideView ? 'visible' : 'hidden';
 }
+
+infCanvas.addEventListener('transformationchange', () => {
+    updateCursorOverlay();
+});
+
+infCanvas.addEventListener('draw', () => {
+    updateCursorOverlay();
+});
+
+infCanvas.addEventListener('transformationstart', () => {
+    cursorOverlay.style.transition = 'none';
+});
+
+infCanvas.addEventListener('transformationend', () => {
+    cursorOverlay.style.transition = 'transform 0.1s linear';
+});
 
 function initCanvas() {
     ctx.reset();
@@ -192,6 +242,11 @@ function stepCode() {
 
 document.getElementById('runButton').addEventListener('click', () => runCode(false));
 
+document.getElementById('resetViewButton').addEventListener('click', () => {
+  infCanvas.viewBox.transformation = { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 };
+  updateCursorOverlay();
+});
+
 //Menú de configuración
 const dropBtn = document.querySelector('.dropbtn');
 const dropdownContent = document.querySelector('.dropdown-content');
@@ -252,6 +307,8 @@ autoRunCheckbox.addEventListener('change', (e) => {
 
 // Load the initial state from storage
 load(ws);
+
+initCanvas();
 
 // Every time the workspace changes state, save the changes to storage.
 ws.addChangeListener((e) => {

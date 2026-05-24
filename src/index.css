@@ -116,6 +116,21 @@ body {
   background-color: #3c5a1e;
 }
 
+#resetViewButton {
+  padding: 10px; 
+  font-weight: bold; 
+  background: var(--dark); 
+  color: white; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#resetViewButton:hover {
+  background-color: #1e242b;
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
@@ -178,8 +193,8 @@ body {
 
 #cursorOverlay {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 0;
+  left: 0;
   width: 0;
   height: 0;
   z-index: 2;
