@@ -97,14 +97,31 @@ const CIRCULO = {
         {
             type: 'input_value',
             name: 'RADIO',
-            check: 'Number'
+            check: 'Number',
         }
     ],
     previousStatement: null,
     nextStatement: null,
     colour: '#7790d9',
-    tooltip: 'Dibuja un circulo con el radio especificado'
+    tooltip: 'Dibuja un circulo con el radio especificado',
+    extensions: ["validate_circulo_radio"]
 }
+
+Blockly.Extensions.register('validate_circulo_radio', function() {
+    this.setOnChange(function(changeEvent) {
+        const radioBlock = this.getInputTargetBlock('RADIO');
+        if (radioBlock && radioBlock.type === 'math_number') {
+            const radioValue = Number(radioBlock.getFieldValue('NUM'));
+            if (radioValue < 0) {
+                this.setWarningText('El radio del círculo no puede ser negativo.');
+            } else {
+                this.setWarningText(null);
+            }
+        } else {
+            this.setWarningText(null);
+        }
+    });
+});
 
 const IR_A = {
     type: 'ir_a',

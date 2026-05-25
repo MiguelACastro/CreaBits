@@ -38,8 +38,8 @@ forBlock['limpiar'] = function(block, generator) {
 }
 
 forBlock['circulo'] = function(block, generator) {
-    const radio = generator.valueToCode(block, 'RADIO', Order.ATOMIC);
-    const code = `circulo(${radio});\n`;
+    const radio = generator.valueToCode(block, 'RADIO', Order.ATOMIC) || '0';
+    const code = `circulo(Math.abs(${radio}));\n`;
     return code;
 }
 
